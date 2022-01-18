@@ -1,64 +1,30 @@
 import logo from './logo.svg';
+import  React from 'react'
 import './App.css';
-import { useTranslation, Trans } from 'react-i18next';
-import { useState, Suspense, useEffect } from 'react';
-import Footer from './Footer'
+import Tes from './Tes.js'
+import { useTranslation } from 'react-i18next'; 
+import './i18next'
 
 function App() {
-  const { t, i18n } = useTranslation();
-  const [count, setCounter] = useState(0);
 
-  const [lngs, setLngs] = useState({ en: { nativeName: 'English' }});
-
-  useEffect(() => {
-    i18n.services.backendConnector.backend.getLanguages((err, ret) => {
-      if (err) return // TODO: handle err...
-      setLngs(ret);
-    });
-  }, []);
+  const { i18n } = useTranslation();
+  const changeLanguage = lng => {
+    i18n.changeLanguage(lng);
+  }
 
   return (
+  
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          {Object.keys(lngs).map((lng) => (
-            <button key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => {
-              i18n.changeLanguage(lng);
-              setCounter(count + 1);
-            }}>
-              {lngs[lng].nativeName}
-            </button>
-          ))}
-        </div>
-        <p>
-          <i>{t('counter', { count })}</i>
-        </p>
-        <p>
-          <Trans i18nKey="description.part1">
-            Edit <code>src/App.js</code> and save to reload.
-          </Trans>
-        </p>
-          {/* <div>{t('new.key', 'this will be added automatically')}</div> */}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {t('description.part2')}
-        </a>
+        <button onClick={()=>changeLanguage("uz")}>Uzbek</button>
+        <button onClick={()=>changeLanguage("en")}>English</button>
       </header>
-      <Footer t={t} />
+      <Tes/>
     </div>
+   
   );
 }
 
-// here app catches the suspense from page in case translations are not yet loaded
-export default function WrappedApp() {
-  return (
-    <Suspense fallback="...is loading">
-      <App />
-    </Suspense>
-  );
-}
+export default App;
+

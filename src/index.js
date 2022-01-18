@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // import i18n (needs to be bundled ;))
-import './i18n';
+import './i18next';
 
 ReactDOM.render(
   <React.StrictMode>
